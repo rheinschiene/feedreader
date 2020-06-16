@@ -9,5 +9,4 @@ return array(
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
     'Diff' => array($vendorDir . '/phpspec/php-diff/lib'),
     'Codeception\\' => array($vendorDir . '/codeception/specify/src'),
-    'Behat\\Gherkin' => array($vendorDir . '/behat/gherkin/src'),
 );
