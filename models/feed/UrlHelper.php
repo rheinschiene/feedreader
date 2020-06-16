@@ -43,7 +43,8 @@ class UrlHelper extends \yii\db\ActiveRecord
     {
 
 		try {
-			$this->content = @file_get_contents($this->url, false, $this->context);
+			$temp = @file_get_contents($this->url, false, $this->context);
+			$this->content = mb_convert_encoding($temp, 'HTML-ENTITIES', "UTF-8");
 		}
 		catch (Throwable $exception) {
 			echo $exception->getMessage();
