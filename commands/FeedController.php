@@ -154,11 +154,17 @@ class FeedController extends Controller
 				echo " (updated last_date)";
 				$data->last_date = date("Y-m-d H:i:s");
 			}
-
-			if(!$data->save()) {
-				print_r($data->getErrors());
-				continue;
+			
+			try {
+				if(!$data->save()) {
+					print_r($data->getErrors());
+				}
 			}
+			catch (Throwable $exception){
+					echo $exception->getMessage();
+					continue;
+			}
+
 		}
 	}
 
@@ -224,7 +230,7 @@ class FeedController extends Controller
 		    else {
 		        foreach($nodes as $node) {
 		            // Ist die Node selbst fett formatiert?
-		            $sanitized_nodeValue = filter_var($node->nodeValue, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+		            $sanitized_nodeValue = filter_var($node->nodeValue, FILTER_SANITIZE_STRING);
 		            if($node->tagName == "h1" || $node->tagName == "h2" || $node->tagName == "h3" || $node->tagName == "b" || $node->tagName == "strong") {
 		                $data->content .= "<strong>" . trim($sanitized_nodeValue) . "</strong>";
 		            }
