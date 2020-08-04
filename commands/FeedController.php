@@ -232,11 +232,12 @@ class FeedController extends Controller
 		        foreach($nodes as $node) {
 		            // Ist die Node selbst fett formatiert?
 		            $sanitized_nodeValue = filter_var($node->nodeValue, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW | FILTER_FLAG_ENCODE_HIGH);
+		            $nodeValue = mb_convert_encoding($sanitized_nodeValue, 'HTML-ENTITIES', "UTF-8");
 		            if($node->tagName == "h1" || $node->tagName == "h2" || $node->tagName == "h3" || $node->tagName == "b" || $node->tagName == "strong") {
-		                $data->content .= "<strong>" . trim($sanitized_nodeValue) . "</strong>";
+		                $data->content .= "<strong>" . trim($nodeValue) . "</strong>";
 		            }
 		            else {
-		                $data->content .= "<p>" . trim($sanitized_nodeValue) . "</p>";
+		                $data->content .= "<p>" . trim($nodeValue) . "</p>";
 		            }
 		        }
 		    }
