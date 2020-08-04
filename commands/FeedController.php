@@ -162,6 +162,7 @@ class FeedController extends Controller
 			}
 			catch (Throwable $exception){
 					echo $exception->getMessage();
+					echo "\Exception! Continue!\n";
 					continue;
 			}
 
@@ -230,7 +231,7 @@ class FeedController extends Controller
 		    else {
 		        foreach($nodes as $node) {
 		            // Ist die Node selbst fett formatiert?
-		            $sanitized_nodeValue = filter_var($node->nodeValue, FILTER_SANITIZE_STRING);
+		            $sanitized_nodeValue = filter_var($node->nodeValue, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW | FILTER_FLAG_ENCODE_HIGH);
 		            if($node->tagName == "h1" || $node->tagName == "h2" || $node->tagName == "h3" || $node->tagName == "b" || $node->tagName == "strong") {
 		                $data->content .= "<strong>" . trim($sanitized_nodeValue) . "</strong>";
 		            }
