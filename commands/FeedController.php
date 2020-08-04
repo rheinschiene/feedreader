@@ -231,8 +231,15 @@ class FeedController extends Controller
 		    else {
 		        foreach($nodes as $node) {
 		            // Ist die Node selbst fett formatiert?
-		            $sanitized_nodeValue = filter_var($node->nodeValue, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW | FILTER_FLAG_ENCODE_HIGH);
-		            $nodeValue = mb_convert_encoding($sanitized_nodeValue, 'HTML-ENTITIES', "UTF-8");
+		            $nodeValue = $node->nodeValue;
+		            $nodeValue = str_replace("ü","u_e",$nodeValue);
+					$nodeValue = str_replace("Ü","U_e",$nodeValue);
+					$nodeValue = str_replace("ö","o_e",$nodeValue);
+					$nodeValue = str_replace("Ö","O_e",$nodeValue);
+					$nodeValue = str_replace("ä","a_e",$nodeValue);
+					$nodeValue = str_replace("Ä","A_e",$nodeValue);
+		            $sanitized_nodeValue = filter_var($nodeValue, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
+		            
 		            if($node->tagName == "h1" || $node->tagName == "h2" || $node->tagName == "h3" || $node->tagName == "b" || $node->tagName == "strong") {
 		                $data->content .= "<strong>" . trim($nodeValue) . "</strong>";
 		            }
