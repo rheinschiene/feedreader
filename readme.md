@@ -3,8 +3,8 @@
 ## Getting started...
 
 ### MySQL Root PW und User PW muss in die folgenden Dateien geschrieben werden:
-secret_mysql_password.txt
-secret_mysql_root_password.txt
+- secret_mysql_password.txt
+- secret_mysql_root_password.txt
 
 ### Datenbank aus einem Backup zurück spielen:
 ```
