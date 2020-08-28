@@ -1,3 +1,6 @@
+# credential file
+secret*
+
 # phpstorm project files
 .idea
 

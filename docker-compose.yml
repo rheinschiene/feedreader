@@ -1,9 +1,41 @@
-version: '2'
+version: '3.2'
+
+volumes:
+  db:
+
 services:
-  php:
-    image: yiisoftware/yii2-php:7.1-apache
+  db:
+    image: mariadb:10.4
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: unless-stopped
     volumes:
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      - ./:/app:delegated
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/secret_mysql_root_password
+      - MYSQL_PASSWORD_FILE=/run/secrets/secret_mysql_password
+      - MYSQL_DATABASE=feedreader
+      - MYSQL_USER=feedreader
+    secrets:
+      - secret_mysql_root_password
+      - secret_mysql_password
+
+  app:
+    build: .
     ports:
-      - '8000:80'
+      - 8080:80
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      - MYSQL_HOST=db:3306
+      - MYSQL_PASSWORD_FILE=/run/secrets/secret_mysql_password
+      - MYSQL_DATABASE=feedreader
+      - MYSQL_USER=feedreader
+    secrets:
+      - secret_mysql_password
+    
+secrets:
+  secret_mysql_root_password:
+    file: ./secret_mysql_root_password.txt
+  secret_mysql_password:
+    file: ./secret_mysql_password.txt
