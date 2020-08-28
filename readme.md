@@ -7,8 +7,8 @@ secret_mysql_password.txt
 secret_mysql_root_password.txt
 
 ### Datenbank aus einem Backup zurück spielen:
-`{MYSQL_PASSWORD=$(cat secret_mysql_password.txt)
-sudo docker exec -i feedreader_db_1 mysql -u feedreader -p${MYSQL_PASSWORD} feedreader < <dumpfile>.sql}`
+`MYSQL_PASSWORD=$(cat secret_mysql_password.txt)`
+`sudo docker exec -i feedreader_db_1 mysql -u feedreader -p${MYSQL_PASSWORD} feedreader < <dumpfile>.sql`
 
 ## Cronjobs anlegen:
 
